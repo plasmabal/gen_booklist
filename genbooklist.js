@@ -6,6 +6,7 @@
 // @author       You
 // @match        https://read.readmoo.com/*
 // @match        https://www.kobo.com/tw/zh/library*
+// @match        https://viewer-ebook.books.com.tw/viewer/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
@@ -20,6 +21,7 @@
         };
     };
 
+    // readmoo.com
     let readmooSite = {
         getBookList: function() {
             return document.getElementsByClassName('library-item-info');
@@ -34,6 +36,7 @@
         }
     }
 
+    // kobo.com
     let koboSite = {
         getBookList: function() {
             return document.getElementsByClassName('book-list')[0].getElementsByClassName('element-flipper');
@@ -48,6 +51,21 @@
             let itemInfo = item.getElementsByClassName('item-info')[0];
             let name = itemInfo.getElementsByClassName('title')[0].innerText;
             let author = itemInfo.getElementsByClassName('authors')[0].innerText;
+            return {name: name, author: author}
+        }
+    }
+
+    // books.com.tw
+    let booksSite = {
+        getBookList: function() {
+            return document.getElementsByClassName('bookshelf__book');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByClassName('book__description__title')[0].innerText;
+            let author = item.getElementsByClassName('book__description__author')[0].innerText.replace('作者：', '');
             return {name: name, author: author}
         }
     }
@@ -79,4 +97,5 @@
 
     GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
     GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
+    GM_registerMenuCommand("Books", makeGenerator(booksSite));
 })();

@@ -20,50 +20,63 @@
         };
     };
 
-    let generateReadmooBookList = function() {
-        let bookList = document.getElementsByClassName('library-item-info');
-        if (bookList.length == 0) {
-            alert('找不到書籍列表. 請切換到書櫃並選擇為列表顯示.');
-            return;
+    let readmooSite = {
+        getBookList: function() {
+            return document.getElementsByClassName('library-item-info');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表. 請切換到書櫃並選擇為列表顯示.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByClassName('title')[0].innerText;
+            let author = item.getElementsByClassName('author')[0].innerText;
+            return {name: name, author: author}
         }
-
-        let msg = '';
-        for (let i = 0; i < bookList.length; i++) {
-            let name = bookList[i].getElementsByClassName('title')[0].innerText;
-            let author = bookList[i].getElementsByClassName('author')[0].innerText;
-            msg += name + '\t' + author + '\n';
-        }
-
-        let handler = createCopyHandler(msg);
-        document.addEventListener('copy', handler);
-        document.execCommand('copy');
-        document.removeEventListener('copy', handler);
     }
 
-    let generateKoboBookList = function() {
-        let bookList = document.getElementsByClassName('book-list')[0].getElementsByClassName('element-flipper');
-        if (bookList.length == 0) {
-            alert('找不到書籍列表.');
-            return;
-        }
-
-        let msg = '';
-        for (let i = 0; i < bookList.length; i++) {
-            if (bookList[i].getElementsByClassName('buy-now').length > 0) {
-                continue;
+    let koboSite = {
+        getBookList: function() {
+            return document.getElementsByClassName('book-list')[0].getElementsByClassName('element-flipper');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            if (item.getElementsByClassName('buy-now').length > 0) {
+                return undefined;
             }
-            let itemInfo = bookList[i].getElementsByClassName('item-info')[0];
+            let itemInfo = item.getElementsByClassName('item-info')[0];
             let name = itemInfo.getElementsByClassName('title')[0].innerText;
             let author = itemInfo.getElementsByClassName('authors')[0].innerText;
-            msg += name + '\t' + author + '\n';
+            return {name: name, author: author}
         }
-
-        let handler = createCopyHandler(msg);
-        document.addEventListener('copy', handler);
-        document.execCommand('copy');
-        document.removeEventListener('copy', handler);
     }
 
-    GM_registerMenuCommand("Readmoo", generateReadmooBookList);
-    GM_registerMenuCommand("Kobo", generateKoboBookList);
+    let makeGenerator = function (site) {
+        return function() {
+            let bookList = site.getBookList();
+            if (bookList.length == 0) {
+                alert(site.noListMsg);
+                return;
+            }
+
+            const books = []
+            for (let i = 0; i < bookList.length; i++) {
+                let item = site.transformBookItem(bookList[i]);
+                if (item === undefined) { continue; }
+                books.push(item);
+            }
+            let msg = books
+                .map(b => b.name + '\t' + b.author)
+                .join('\n');
+
+            let handler = createCopyHandler(msg);
+            document.addEventListener('copy', handler);
+            document.execCommand('copy');
+            document.removeEventListener('copy', handler);
+        }
+    }
+
+    GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
+    GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
 })();

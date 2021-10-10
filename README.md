@@ -49,6 +49,11 @@ This script can be used on the following sites:
 
 * Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > MyBook.  Then book info in the listing will be collected in your pasteboard.
 
+## Amazon (https://www.amazon.com/hz/mycd/digital-console/contentlist/)
+
+* You may want to apply different sorting and filtering.
+* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > MyBook.  Then book info in the listing will be collected in your pasteboard.
+
 # Other things
 
 Patches welcome. :)

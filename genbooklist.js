@@ -11,6 +11,8 @@
 // @match        https://www.pubu.com.tw/bookshelf*
 // @match        https://play.google.com/books*
 // @match        https://mybook.taiwanmobile.com/bookcase/list*
+// @match        https://www.amazon.com/hz/mycd/digital-console/contentlist/*
+// @match        https://www.amazon.cn/hz/mycd/digital-console/contentlist/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @homepageURL  https://github.com/plasmabal/gen_booklist
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
@@ -183,9 +185,29 @@
             return '找不到書籍列表.';
         },
         transformBookItem: function(item) {
-            let coverBadges = item.getElementsByClassName('cover-badge');
             let name = item.getElementsByTagName('h3')[0].innerText;
             let author = item.getElementsByClassName('author')[0].innerText.replace('作者：', '');
+            return {name: name, author: author}
+        }
+    }
+
+    // https://www.amazon.com/hz/mycd/digital-console/contentlist/
+    let amazonSite = {
+        isCorrectHost: function(host) {
+            return (host == "www.amazon.com");
+        },
+        hostErrMsg: function() {
+            return "請在 Amazon My Digital Content 裡使用";
+        },
+        getBookList: function() {
+            return document.getElementById('CONTENT_LIST').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByClassName('digital_entity_title')[0].innerText;
+            let author = item.getElementsByClassName('information_row')[0].innerText;
             return {name: name, author: author}
         }
     }
@@ -230,6 +252,7 @@
         }
     }
 
+    GM_registerMenuCommand("Amazon", makeGenerator(amazonSite));
     GM_registerMenuCommand("Books", makeGenerator(booksSite));
     GM_registerMenuCommand("Google Play Books", makeGenerator(googleBooksSite));
     GM_registerMenuCommand("HyRead", makeGenerator(hyreadSite));

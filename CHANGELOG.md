@@ -1,5 +1,5 @@
 # UPCOMING
-* Support MyBook.
+* Support MyBook and Amazon.
 
 # v0.2
 * Add host check.

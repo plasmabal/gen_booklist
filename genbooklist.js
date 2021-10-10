@@ -7,6 +7,7 @@
 // @match        https://read.readmoo.com/*
 // @match        https://www.kobo.com/tw/zh/library*
 // @match        https://viewer-ebook.books.com.tw/viewer/*
+// @match        http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
@@ -88,6 +89,27 @@
         }
     }
 
+        // ebook.hyread.com.tw
+    let hyreadSite = {
+        isCorrectHost: function(host) {
+            return (host == "ebook.hyread.com.tw");
+        },
+        hostErrMsg: function() {
+            return "請在 HyRead 書櫃裡使用";
+        },
+        getBookList: function() {
+            return document.getElementsByClassName('bookcase_list_item');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByClassName('bookname')[0].innerText;
+            let author = item.getElementsByClassName('bookname')[1].innerText;
+            return {name: name, author: author}
+        }
+    }
+
     let makeGenerator = function (site) {
         return function() {
             if (!site.isCorrectHost(window.location.host)) {
@@ -119,7 +141,8 @@
         }
     }
 
-    GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
-    GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
     GM_registerMenuCommand("Books", makeGenerator(booksSite));
+    GM_registerMenuCommand("HyRead", makeGenerator(hyreadSite));
+    GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
+    GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
 })();

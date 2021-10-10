@@ -32,6 +32,11 @@ This script can be used on the following sites:
 * You may want to apply different sorting and filtering.
 * Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Books.  Then book info in the listing will be collected in your pasteboard.
 
+## HyRead (http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp)
+
+* Only Listing is supported.
+* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > HyRead.  Then book info in the listing will be collected in your pasteboard.
+
 # Other things
 
 Patches welcome. :)

@@ -11,6 +11,8 @@
 // @match        https://www.pubu.com.tw/bookshelf*
 // @match        https://play.google.com/books*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @homepageURL  https://github.com/plasmabal/gen_booklist
+// @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 

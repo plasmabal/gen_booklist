@@ -1,4 +1,5 @@
 # UPCOMING
+* Support MyBook.
 
 # v0.2
 * Add host check.

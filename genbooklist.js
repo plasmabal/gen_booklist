@@ -10,6 +10,7 @@
 // @match        http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp*
 // @match        https://www.pubu.com.tw/bookshelf*
 // @match        https://play.google.com/books*
+// @match        https://mybook.taiwanmobile.com/bookcase/list*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @homepageURL  https://github.com/plasmabal/gen_booklist
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
@@ -19,12 +20,20 @@
 (function() {
     'use strict';
 
-    let createCopyHandler = function(msg) {
-        return function(event) {
-            event.clipboardData.setData('text', msg);
-            event.preventDefault();
-        };
-    };
+    // ==== Site Configuration ====
+    //
+    // Note:
+    //
+    // Each site configuration contains the following fields
+    //
+    // * isCorrectHost: Function receives a host string and returns bool. Indicate if the host is the expected one.
+    // * hostErrMsg: Function returns a string.  The message is displayed if the site configuration is used at the wrong host.
+    // * getBookList: Function returns HTMLCollection.
+    // * noListMsg: Functions returns a string.  The message is displayed if the HTMLCollection returned from `getBookList` contains no element.
+    // * transformBookItem: Convert each HTMLElement returned `getBookList` to an object contains the following fields:
+    //    * name: Book name
+    //    * author: Book author
+    //   Or returns `undefined` if the eleemnt should be skipped.
 
     // readmoo.com
     let readmooSite = {
@@ -159,6 +168,37 @@
         }
     }
 
+    // https://mybook.taiwanmobile.com/bookcase/list
+    let myBookSite = {
+        isCorrectHost: function(host) {
+            return (host == "mybook.taiwanmobile.com");
+        },
+        hostErrMsg: function() {
+            return "請在 myBook 我的書籍裡使用";
+        },
+        getBookList: function() {
+            return document.getElementsByClassName('bookshelf-list-grid')[0].getElementsByClassName('item');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let coverBadges = item.getElementsByClassName('cover-badge');
+            let name = item.getElementsByTagName('h3')[0].innerText;
+            let author = item.getElementsByClassName('author')[0].innerText.replace('作者：', '');
+            return {name: name, author: author}
+        }
+    }
+
+    // ==== Booklist Generator ====
+
+    let createCopyHandler = function(msg) {
+        return function(event) {
+            event.clipboardData.setData('text', msg);
+            event.preventDefault();
+        };
+    };
+
     let makeGenerator = function (site) {
         return function() {
             if (!site.isCorrectHost(window.location.host)) {
@@ -191,9 +231,10 @@
     }
 
     GM_registerMenuCommand("Books", makeGenerator(booksSite));
+    GM_registerMenuCommand("Google Play Books", makeGenerator(googleBooksSite));
     GM_registerMenuCommand("HyRead", makeGenerator(hyreadSite));
     GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
+    GM_registerMenuCommand("MyBook", makeGenerator(myBookSite));
     GM_registerMenuCommand("Pubu", makeGenerator(pubuSite));
     GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
-    GM_registerMenuCommand("Google Play Books", makeGenerator(googleBooksSite));
 })();

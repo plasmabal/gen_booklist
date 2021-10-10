@@ -12,52 +12,24 @@ This script is inspired by https://docs.google.com/presentation/d/1WMrwjj6R927XE
 
 # How to use
 
-This script can be used on the following sites:
+* Open your browser and load the book shelf page.
+* Since the script can only collect books on the web page, make sure you have the correct ordering and/or filtering before start the action.
+* Tap the right button to bring up the context menu.  If the site is correct and the link is right, you should see Tampermonkey in the context menu.
+* Tap the Tapermonkey item, tap GenBooklist, and tap the appropriate action.
+* If everything goes well, the script will fetch book info (title and author) and paste into the pasteboard with the following message: `xx books are collected.`
+* You can open your Excel or Goole Sheet and paste it.
 
-## Readmoo (https://read.readmoo.com/)
+# Supported sites
 
-* Go to Bookshelf and select Books (書櫃 > 書籍).
-* Make sure the display mode is Listing (列表).
-* You may want to apply different sorting and filter.
-* You may want to scroll down for a while to load more books.
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Readmoo.  Then book info in the listing will be collected in your pasteboard.
-
-## Kobo (https://www.kobo.com/tw/zh/library)
-
-* You may want to apply different sorting and items per page.
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Kobo.  Then book info in the listing will be collected in your pasteboard.
-
-## Books (https://viewer-ebook.books.com.tw/viewer/index.html)
-
-* You may want to apply different sorting and filtering.
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Books.  Then book info in the listing will be collected in your pasteboard.
-
-## HyRead (http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp)
-
-* Only Listing is supported.
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > HyRead.  Then book info in the listing will be collected in your pasteboard.
-
-## Pubu (https://www.pubu.com.tw/bookshelf)
-
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Pubu.  Then book info in the listing will be collected in your pasteboard.
-
-## Google Play Books (https://play.google.com/books)
-
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Google Play Books.  Then book info in the listing will be collected in your pasteboard.
-
-## MyBook (https://mybook.taiwanmobile.com/bookcase/list)
-
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > MyBook.  Then book info in the listing will be collected in your pasteboard.
-
-## Amazon (https://www.amazon.com/hz/mycd/digital-console/contentlist/)
-
-* You may want to apply different sorting and filtering.
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > MyBook.  Then book info in the listing will be collected in your pasteboard.
-
-## HamiBook (https://webreader.hamibook.com.tw/HamiBookcase#/)
-
-* You may want to apply different sorting and filtering.
-* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > HamiBook.  Then book info in the listing will be collected in your pasteboard.
+* Readmoo (https://read.readmoo.com/). Bookself > Books and Listing only (書櫃 > 書籍, 列表).
+* Kobo (https://www.kobo.com/tw/zh/library).
+* Books (https://viewer-ebook.books.com.tw/viewer/index.html).
+* HyRead (http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp). Listing only.
+* Pubu (https://www.pubu.com.tw/bookshelf).
+* Google Play Books (https://play.google.com/books).
+* MyBook (https://mybook.taiwanmobile.com/bookcase/list).
+* Amazon (https://www.amazon.com/hz/mycd/digital-console/contentlist/).
+* HamiBook (https://webreader.hamibook.com.tw/HamiBookcase#/).
 
 # Other things
 

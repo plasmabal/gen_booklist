@@ -269,7 +269,11 @@
             document.execCommand('copy');
             document.removeEventListener('copy', handler);
 
-            alert(books.length + " books is collected.");
+            if (books.length == 1) {
+                alert(books.length + "1 book is collected.");
+            } else {
+                alert(books.length + " books are collected.");
+            }
         }
     }
 

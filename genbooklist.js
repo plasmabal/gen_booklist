@@ -23,6 +23,12 @@
 
     // readmoo.com
     let readmooSite = {
+        isCorrectHost: function(host) {
+            return (host == "read.readmoo.com");
+        },
+        hostErrMsg: function() {
+            return "請在讀墨書櫃裡使用";
+        },
         getBookList: function() {
             return document.getElementsByClassName('library-item-info');
         },
@@ -38,6 +44,12 @@
 
     // kobo.com
     let koboSite = {
+        isCorrectHost: function(host) {
+            return (host == "www.kobo.com");
+        },
+        hostErrMsg: function() {
+            return "請在 Kobo 裡使用";
+        },
         getBookList: function() {
             return document.getElementsByClassName('book-list')[0].getElementsByClassName('element-flipper');
         },
@@ -57,6 +69,12 @@
 
     // books.com.tw
     let booksSite = {
+        isCorrectHost: function(host) {
+            return (host == "viewer-ebook.books.com.tw");
+        },
+        hostErrMsg: function() {
+            return "請在博客來電子書櫃裡使用";
+        },
         getBookList: function() {
             return document.getElementsByClassName('bookshelf__book');
         },
@@ -72,9 +90,13 @@
 
     let makeGenerator = function (site) {
         return function() {
+            if (!site.isCorrectHost(window.location.host)) {
+                alert(site.hostErrMsg());
+                return;
+            }
             let bookList = site.getBookList();
             if (bookList.length == 0) {
-                alert(site.noListMsg);
+                alert(site.noListMsg());
                 return;
             }
 
@@ -92,6 +114,8 @@
             document.addEventListener('copy', handler);
             document.execCommand('copy');
             document.removeEventListener('copy', handler);
+
+            alert(books.length + " books is collected.");
         }
     }
 

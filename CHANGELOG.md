@@ -1,5 +1,9 @@
 # UPCOMING
+
+# v0.3
 * Support MyBook, Amazon and HamiBook.
+* Adjust README.
+* Fix a message typo.
 
 # v0.2
 * Add host check.

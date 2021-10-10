@@ -8,6 +8,7 @@
 // @match        https://www.kobo.com/tw/zh/library*
 // @match        https://viewer-ebook.books.com.tw/viewer/*
 // @match        http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp*
+// @match        https://www.pubu.com.tw/bookshelf*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
@@ -110,6 +111,26 @@
         }
     }
 
+    // www.pubu.com.tw
+    let pubuSite = {
+        isCorrectHost: function(host) {
+            return (host == "www.pubu.com.tw");
+        },
+        hostErrMsg: function() {
+            return "請在 Pubu 我的內容裡使用";
+        },
+        getBookList: function() {
+            return document.getElementsByClassName('allBook');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByTagName('h3')[0].innerText;
+            return {name: name, author: ''}
+        }
+    }
+
     let makeGenerator = function (site) {
         return function() {
             if (!site.isCorrectHost(window.location.host)) {
@@ -144,5 +165,6 @@
     GM_registerMenuCommand("Books", makeGenerator(booksSite));
     GM_registerMenuCommand("HyRead", makeGenerator(hyreadSite));
     GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
+    GM_registerMenuCommand("Pubu", makeGenerator(pubuSite));
     GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
 })();

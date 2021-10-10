@@ -37,6 +37,10 @@ This script can be used on the following sites:
 * Only Listing is supported.
 * Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > HyRead.  Then book info in the listing will be collected in your pasteboard.
 
+## Pubu (https://www.pubu.com.tw/bookshelf)
+
+* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Pubu.  Then book info in the listing will be collected in your pasteboard.
+
 # Other things
 
 Patches welcome. :)

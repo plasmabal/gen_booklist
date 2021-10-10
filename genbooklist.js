@@ -13,8 +13,9 @@
 // @match        https://play.google.com/books*
 // @match        https://mybook.taiwanmobile.com/bookcase/list*
 // @match        https://www.amazon.com/hz/mycd/digital-console/contentlist/*
-// @match        https://www.amazon.cn/hz/mycd/digital-console/contentlist/*
 // @match        https://webreader.hamibook.com.tw/HamiBookcase*
+// @match        https://www.amazon.cn/gp/digital/fiona/manage*
+// @match        https://www.amazon.cn/hz/mycd/myx*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @homepageURL  https://github.com/plasmabal/gen_booklist
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
@@ -194,7 +195,7 @@
     }
 
     // https://www.amazon.com/hz/mycd/digital-console/contentlist/
-    let amazonSite = {
+    let amazonUSSite = {
         isCorrectHost: function(host) {
             return (host == "www.amazon.com");
         },
@@ -231,6 +232,37 @@
         transformBookItem: function(item) {
             let name = item.getElementsByClassName('index_book_title')[0].innerText;
             return {name: name, author: ''};
+        }
+    }
+
+    // https://www.amazon.cn/hz/mycd/myx*
+    // contentTableList_myx
+    // + contentTableListRow_myx
+    //   + myx-column
+    let amazonCNSite = {
+        isCorrectHost: function(host) {
+            return (host == "www.amazon.cn");
+        },
+        hostErrMsg: function() {
+            return "請在 Amazon CN 的 管理我的内容和设备 裡使用";
+        },
+        getBookList: function() {
+            let rows = document.getElementsByClassName('contentTableList_myx')[1].getElementsByClassName('contentTableListRow_myx');
+            const bookList = [];
+            for (let i = 0; i < rows.length; i++) {
+                if (rows[i].tagName == 'DIV') {
+                    bookList.push(rows[i]);
+                }
+            }
+            return bookList;
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByClassName('myx-column')[2].innerText;
+            let author = item.getElementsByClassName('myx-column')[3].innerText;
+            return {name: name, author: author};
         }
     }
 
@@ -278,7 +310,8 @@
         }
     }
 
-    GM_registerMenuCommand("Amazon", makeGenerator(amazonSite));
+    GM_registerMenuCommand("Amazon CN", makeGenerator(amazonCNSite));
+    GM_registerMenuCommand("Amazon US", makeGenerator(amazonUSSite));
     GM_registerMenuCommand("Books", makeGenerator(booksSite));
     GM_registerMenuCommand("Google Play Books", makeGenerator(googleBooksSite));
     GM_registerMenuCommand("HamiBook", makeGenerator(hamiBookSite));

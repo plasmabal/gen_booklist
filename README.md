@@ -28,8 +28,9 @@ This script is inspired by https://docs.google.com/presentation/d/1WMrwjj6R927XE
 * Pubu (https://www.pubu.com.tw/bookshelf).
 * Google Play Books (https://play.google.com/books).
 * MyBook (https://mybook.taiwanmobile.com/bookcase/list).
-* Amazon (https://www.amazon.com/hz/mycd/digital-console/contentlist/).
+* Amazon US (https://www.amazon.com/hz/mycd/digital-console/contentlist/).
 * HamiBook (https://webreader.hamibook.com.tw/HamiBookcase#/).
+* Amazon CN (https://www.amazon.cn/hz/mycd/myx, https://www.amazon.cn/gp/digital/fiona/manage).
 
 # Other things
 

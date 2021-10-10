@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GenBooklist
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Generate a copy of book list from various sites.
 // @author       You
 // @match        https://read.readmoo.com/*

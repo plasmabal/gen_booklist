@@ -1,4 +1,6 @@
 # UPCOMING
+
+# v0.5
 * Support Amazon CN.
 
 # v0.4

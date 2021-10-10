@@ -13,6 +13,7 @@
 // @match        https://mybook.taiwanmobile.com/bookcase/list*
 // @match        https://www.amazon.com/hz/mycd/digital-console/contentlist/*
 // @match        https://www.amazon.cn/hz/mycd/digital-console/contentlist/*
+// @match        https://webreader.hamibook.com.tw/HamiBookcase*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @homepageURL  https://github.com/plasmabal/gen_booklist
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
@@ -54,7 +55,7 @@
         transformBookItem: function(item) {
             let name = item.getElementsByClassName('title')[0].innerText;
             let author = item.getElementsByClassName('author')[0].innerText;
-            return {name: name, author: author}
+            return {name: name, author: author};
         }
     }
 
@@ -79,7 +80,7 @@
             let itemInfo = item.getElementsByClassName('item-info')[0];
             let name = itemInfo.getElementsByClassName('title')[0].innerText;
             let author = itemInfo.getElementsByClassName('authors')[0].innerText;
-            return {name: name, author: author}
+            return {name: name, author: author};
         }
     }
 
@@ -100,7 +101,7 @@
         transformBookItem: function(item) {
             let name = item.getElementsByClassName('book__description__title')[0].innerText;
             let author = item.getElementsByClassName('book__description__author')[0].innerText.replace('作者：', '');
-            return {name: name, author: author}
+            return {name: name, author: author};
         }
     }
 
@@ -121,7 +122,7 @@
         transformBookItem: function(item) {
             let name = item.getElementsByClassName('bookname')[0].innerText;
             let author = item.getElementsByClassName('bookname')[1].innerText;
-            return {name: name, author: author}
+            return {name: name, author: author};
         }
     }
 
@@ -141,7 +142,7 @@
         },
         transformBookItem: function(item) {
             let name = item.getElementsByTagName('h3')[0].innerText;
-            return {name: name, author: ''}
+            return {name: name, author: ''};
         }
     }
 
@@ -166,7 +167,7 @@
             }
             let name = item.getElementsByClassName('title')[0].innerText;
             let author = item.getElementsByClassName('author')[0].innerText;
-            return {name: name, author: author}
+            return {name: name, author: author};
         }
     }
 
@@ -187,7 +188,7 @@
         transformBookItem: function(item) {
             let name = item.getElementsByTagName('h3')[0].innerText;
             let author = item.getElementsByClassName('author')[0].innerText.replace('作者：', '');
-            return {name: name, author: author}
+            return {name: name, author: author};
         }
     }
 
@@ -208,7 +209,27 @@
         transformBookItem: function(item) {
             let name = item.getElementsByClassName('digital_entity_title')[0].innerText;
             let author = item.getElementsByClassName('information_row')[0].innerText;
-            return {name: name, author: author}
+            return {name: name, author: author};
+        }
+    }
+
+    // https://webreader.hamibook.com.tw/HamiBookcase#/
+    let hamiBookSite = {
+        isCorrectHost: function(host) {
+            return (host == "webreader.hamibook.com.tw");
+        },
+        hostErrMsg: function() {
+            return "請在 HamiBook 的個人書櫃裡使用";
+        },
+        getBookList: function() {
+            return document.getElementsByClassName('one_classification_book_content')[0].getElementsByTagName('li');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByClassName('index_book_title')[0].innerText;
+            return {name: name, author: ''};
         }
     }
 
@@ -255,6 +276,7 @@
     GM_registerMenuCommand("Amazon", makeGenerator(amazonSite));
     GM_registerMenuCommand("Books", makeGenerator(booksSite));
     GM_registerMenuCommand("Google Play Books", makeGenerator(googleBooksSite));
+    GM_registerMenuCommand("HamiBook", makeGenerator(hamiBookSite));
     GM_registerMenuCommand("HyRead", makeGenerator(hyreadSite));
     GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
     GM_registerMenuCommand("MyBook", makeGenerator(myBookSite));

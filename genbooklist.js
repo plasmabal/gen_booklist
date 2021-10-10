@@ -9,6 +9,7 @@
 // @match        https://viewer-ebook.books.com.tw/viewer/*
 // @match        http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp*
 // @match        https://www.pubu.com.tw/bookshelf*
+// @match        https://play.google.com/books*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
@@ -131,6 +132,31 @@
         }
     }
 
+    // https://play.google.com/books
+    let googleBooksSite = {
+        isCorrectHost: function(host) {
+            return (host == "play.google.com");
+        },
+        hostErrMsg: function() {
+            return "請在 Google Play Books 我的書籍裡使用";
+        },
+        getBookList: function() {
+            return document.getElementsByClassName('ebook');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let coverBadges = item.getElementsByClassName('cover-badge');
+            if (coverBadges.length > 0 && coverBadges[0].innerText == '試閱內容') {
+                return undefined;
+            }
+            let name = item.getElementsByClassName('title')[0].innerText;
+            let author = item.getElementsByClassName('author')[0].innerText;
+            return {name: name, author: author}
+        }
+    }
+
     let makeGenerator = function (site) {
         return function() {
             if (!site.isCorrectHost(window.location.host)) {
@@ -167,4 +193,5 @@
     GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
     GM_registerMenuCommand("Pubu", makeGenerator(pubuSite));
     GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
+    GM_registerMenuCommand("Google Play Books", makeGenerator(googleBooksSite));
 })();

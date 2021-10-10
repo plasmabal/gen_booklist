@@ -41,6 +41,10 @@ This script can be used on the following sites:
 
 * Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Pubu.  Then book info in the listing will be collected in your pasteboard.
 
+## Google Play Books (https://play.google.com/books)
+
+* Right click on the page to show context menu.  Select Tampermonkey > GenBooklist > Google Play Books.  Then book info in the listing will be collected in your pasteboard.
+
 # Other things
 
 Patches welcome. :)

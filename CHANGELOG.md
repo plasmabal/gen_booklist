@@ -1,5 +1,8 @@
 # UPCOMING
 
+# v0.4
+* Fix GenBooklist doesn't show up on HyRead site.
+
 # v0.3
 * Support MyBook, Amazon and HamiBook.
 * Adjust README.

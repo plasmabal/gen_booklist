@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         GenBooklist
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Generate a copy of book list from various sites.
 // @author       You
 // @match        https://read.readmoo.com/*
 // @match        https://www.kobo.com/tw/zh/library*
 // @match        https://viewer-ebook.books.com.tw/viewer/*
-// @match        http://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp*
+// @match        https://ebook.hyread.com.tw/Template/store/member/my_bookcase_column_list.jsp*
+// @match        https://ebook.hyread.com.tw/Template/store/member/my_bookcase_cover_list.jsp*
 // @match        https://www.pubu.com.tw/bookshelf*
 // @match        https://play.google.com/books*
 // @match        https://mybook.taiwanmobile.com/bookcase/list*

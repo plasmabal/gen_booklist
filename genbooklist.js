@@ -107,6 +107,10 @@
             return '找不到書籍列表.';
         },
         transformBookItem: function(item) {
+            let bookmarks = item.getElementsByClassName('book__bookmark');
+            if (bookmarks.length > 0 && bookmarks[0].innerText == '試閱') {
+                return undefined;
+            }
             let name = item.getElementsByClassName('book__description__title')[0].innerText;
             let author = item.getElementsByClassName('book__description__author')[0].innerText.replace('作者：', '');
             return {name: name, author: author};

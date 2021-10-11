@@ -1,6 +1,7 @@
 # UPCOMING
 * Show only valid actions for the current site.
 * Use GM_setClipboard to set the clipboard.
+* Add a setting: Trim Subtitle.
 
 # v0.5
 * Support Amazon CN.

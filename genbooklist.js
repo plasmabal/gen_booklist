@@ -21,10 +21,15 @@
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
 // @grant        GM_registerMenuCommand
 // @grant        GM_setClipboard
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_unregisterMenuCommand
 // ==/UserScript==
 
 (function() {
     'use strict';
+
+    var shouldTrimSubtitle = GM_getValue('trimSubtitle', false);
 
     // ==== Site Configuration ====
     //
@@ -287,8 +292,17 @@
                 if (item === undefined) { continue; }
                 books.push(item);
             }
+
+            function trimSubtitle(title) {
+                if (shouldTrimSubtitle) {
+                    return title.replace(/：.+$/, '');
+                } else {
+                    return title;
+                }
+            }
+
             let msg = books
-                .map(b => b.name + '\t' + b.author)
+                .map(b => trimSubtitle(b.name) + '\t' + b.author)
                 .join('\n');
 
             GM_setClipboard(msg);
@@ -317,5 +331,16 @@
         if (site.isCorrectHost(window.location.host)) {
             GM_registerMenuCommand(name, makeGenerator(site));
         }
+    }{}
+
+    var trimSubtitleMenuId;
+    function trimSubtitleMenuTitle() {
+        return "Setting: Trim Subtitle " + (shouldTrimSubtitle ? "on" : "off");
     }
+    function toggleTrimSubtitle() {
+        shouldTrimSubtitle = !shouldTrimSubtitle;
+        GM_unregisterMenuCommand(trimSubtitleMenuId);
+        trimSubtitleMenuId = GM_registerMenuCommand(trimSubtitleMenuTitle(), toggleTrimSubtitle);
+    }
+    trimSubtitleMenuId = GM_registerMenuCommand(trimSubtitleMenuTitle(), toggleTrimSubtitle);
 })();

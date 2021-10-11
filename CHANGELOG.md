@@ -1,4 +1,5 @@
 # UPCOMING
+* Show only valid actions for the current site.
 
 # v0.5
 * Support Amazon CN.

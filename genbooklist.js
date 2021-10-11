@@ -310,14 +310,21 @@
         }
     }
 
-    GM_registerMenuCommand("Amazon CN", makeGenerator(amazonCNSite));
-    GM_registerMenuCommand("Amazon US", makeGenerator(amazonUSSite));
-    GM_registerMenuCommand("Books", makeGenerator(booksSite));
-    GM_registerMenuCommand("Google Play Books", makeGenerator(googleBooksSite));
-    GM_registerMenuCommand("HamiBook", makeGenerator(hamiBookSite));
-    GM_registerMenuCommand("HyRead", makeGenerator(hyreadSite));
-    GM_registerMenuCommand("Kobo", makeGenerator(koboSite));
-    GM_registerMenuCommand("MyBook", makeGenerator(myBookSite));
-    GM_registerMenuCommand("Pubu", makeGenerator(pubuSite));
-    GM_registerMenuCommand("Readmoo", makeGenerator(readmooSite));
+    let sites = {
+        'Amazon CN': amazonCNSite,
+        'Amazon US': amazonUSSite,
+        'Books': booksSite,
+        'Google Play Books': googleBooksSite,
+        'HamiBook': hamiBookSite,
+        'HyRead': hyreadSite,
+        'Kobo': koboSite,
+        'MyBook': myBookSite,
+        'Pubu': pubuSite,
+        'Readmoo': readmooSite,
+    }
+    for (const [name, site] of Object.entries(sites)) {
+        if (site.isCorrectHost(window.location.host)) {
+            GM_registerMenuCommand(name, makeGenerator(site));
+        }
+    }
 })();

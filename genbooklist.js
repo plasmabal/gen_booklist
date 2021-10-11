@@ -20,6 +20,7 @@
 // @homepageURL  https://github.com/plasmabal/gen_booklist
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
 // @grant        GM_registerMenuCommand
+// @grant        GM_setClipboard
 // ==/UserScript==
 
 (function() {
@@ -268,13 +269,6 @@
 
     // ==== Booklist Generator ====
 
-    let createCopyHandler = function(msg) {
-        return function(event) {
-            event.clipboardData.setData('text', msg);
-            event.preventDefault();
-        };
-    };
-
     let makeGenerator = function (site) {
         return function() {
             if (!site.isCorrectHost(window.location.host)) {
@@ -297,10 +291,7 @@
                 .map(b => b.name + '\t' + b.author)
                 .join('\n');
 
-            let handler = createCopyHandler(msg);
-            document.addEventListener('copy', handler);
-            document.execCommand('copy');
-            document.removeEventListener('copy', handler);
+            GM_setClipboard(msg);
 
             if (books.length == 1) {
                 alert(books.length + "1 book is collected.");

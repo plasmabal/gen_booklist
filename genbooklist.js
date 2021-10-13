@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GenBooklist
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Generate a copy of book list from various sites.
 // @author       You
 // @match        https://read.readmoo.com/*
@@ -16,6 +16,7 @@
 // @match        https://webreader.hamibook.com.tw/HamiBookcase*
 // @match        https://www.amazon.cn/gp/digital/fiona/manage*
 // @match        https://www.amazon.cn/hz/mycd/myx*
+// @match        https://www.bookwalker.com.tw/member/available_book_list*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @homepageURL  https://github.com/plasmabal/gen_booklist
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
@@ -246,9 +247,6 @@
     }
 
     // https://www.amazon.cn/hz/mycd/myx*
-    // contentTableList_myx
-    // + contentTableListRow_myx
-    //   + myx-column
     let amazonCNSite = {
         isCorrectHost: function(host) {
             return (host == "www.amazon.cn");
@@ -272,6 +270,27 @@
         transformBookItem: function(item) {
             let name = item.getElementsByClassName('myx-column')[2].innerText;
             let author = item.getElementsByClassName('myx-column')[3].innerText;
+            return {name: name, author: author};
+        }
+    }
+
+    // https://www.bookwalker.com.tw/member/available_book_list
+    let bookwalkerTWSite = {
+        isCorrectHost: function(host) {
+            return (host == "www.bookwalker.com.tw");
+        },
+        hostErrMsg: function() {
+            return "請在 BOOK☆WALKER TAIWAN 的 線上PC閱讀書櫃 裡使用";
+        },
+        getBookList: function() {
+            return document.getElementsByClassName('row buy_info');
+        },
+        noListMsg: function() {
+            return '找不到書籍列表.';
+        },
+        transformBookItem: function(item) {
+            let name = item.getElementsByClassName('buy_book')[0].innerText;
+            let author = item.getElementsByClassName('buy_author')[1].innerText;
             return {name: name, author: author};
         }
     }
@@ -322,6 +341,7 @@
     let sites = {
         'Amazon CN': amazonCNSite,
         'Amazon US': amazonUSSite,
+        'BOOK☆WALKER TAIWAN': bookwalkerTWSite,
         'Books': booksSite,
         'Google Play Books': googleBooksSite,
         'HamiBook': hamiBookSite,

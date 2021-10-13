@@ -1,5 +1,8 @@
 # UPCOMING
 
+# v0.7
+* Support BOOKWALKER TW.
+
 # v0.6
 * Show only valid actions for the current site.
 * Use GM_setClipboard to set the clipboard.

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GenBooklist
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.8
 // @description  Generate a copy of book list from various sites.
 // @author       You
 // @match        https://read.readmoo.com/*
@@ -16,7 +16,7 @@
 // @match        https://webreader.hamibook.com.tw/HamiBookcase*
 // @match        https://www.amazon.cn/gp/digital/fiona/manage*
 // @match        https://www.amazon.cn/hz/mycd/myx*
-// @match        https://www.bookwalker.com.tw/member/available_book_list*
+// @match        https://www.bookwalker.com.tw/bookcase/available_book_list*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @homepageURL  https://github.com/plasmabal/gen_booklist
 // @updateURL    https://raw.githubusercontent.com/plasmabal/gen_booklist/master/genbooklist.js
@@ -283,14 +283,14 @@
             return "請在 BOOK☆WALKER TAIWAN 的 線上PC閱讀書櫃 裡使用";
         },
         getBookList: function() {
-            return document.getElementsByClassName('row buy_info');
+            return document.getElementsByClassName('readerBookListType');
         },
         noListMsg: function() {
             return '找不到書籍列表.';
         },
         transformBookItem: function(item) {
-            let name = item.getElementsByClassName('buy_book')[0].innerText;
-            let author = item.getElementsByClassName('buy_author')[1].innerText;
+            let name = item.getElementsByClassName('readerBookName')[0].innerText;
+            let author = item.getElementsByClassName('readerBookAuthor')[0].innerText;
             return {name: name, author: author};
         }
     }

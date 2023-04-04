@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GenBooklist
 // @namespace    http://tampermonkey.net/
-// @version      0.8
+// @version      0.9
 // @description  Generate a copy of book list from various sites.
 // @author       You
 // @match        https://read.readmoo.com/*
@@ -14,8 +14,7 @@
 // @match        https://mybook.taiwanmobile.com/bookcase/list*
 // @match        https://www.amazon.com/hz/mycd/digital-console/contentlist/*
 // @match        https://webreader.hamibook.com.tw/HamiBookcase*
-// @match        https://www.amazon.cn/gp/digital/fiona/manage*
-// @match        https://www.amazon.cn/hz/mycd/myx*
+// @match        https://www.amazon.cn/hz/mycd/digital-console/contentlist/*
 // @match        https://www.bookwalker.com.tw/bookcase/available_book_list*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @homepageURL  https://github.com/plasmabal/gen_booklist
@@ -252,24 +251,17 @@
             return (host == "www.amazon.cn");
         },
         hostErrMsg: function() {
-            return "請在 Amazon CN 的 管理我的内容和设备 裡使用";
+            return "請在 Amazon CN 的 管理我的内容和设备 的 设备 裡使用";
         },
         getBookList: function() {
-            let rows = document.getElementsByClassName('contentTableList_myx')[1].getElementsByClassName('contentTableListRow_myx');
-            const bookList = [];
-            for (let i = 0; i < rows.length; i++) {
-                if (rows[i].tagName == 'DIV') {
-                    bookList.push(rows[i]);
-                }
-            }
-            return bookList;
+            return document.getElementById("CONTENT_LIST").getElementsByClassName("digital_entity_details");
         },
         noListMsg: function() {
             return '找不到書籍列表.';
         },
         transformBookItem: function(item) {
-            let name = item.getElementsByClassName('myx-column')[2].innerText;
-            let author = item.getElementsByClassName('myx-column')[3].innerText;
+            let name = item.getElementsByClassName('digital_entity_title')[0].innerText;
+            let author = item.getElementsByClassName('information_row')[0].innerText;
             return {name: name, author: author};
         }
     }
@@ -326,12 +318,12 @@
 
             let msg = books
                 .map(b => trimSubtitle(b.name) + '\t' + b.author)
-                .join('\n');
+                .join('\n') + "\n";
 
             GM_setClipboard(msg);
 
             if (books.length == 1) {
-                alert(books.length + "1 book is collected.");
+                alert(books.length + " book is collected.");
             } else {
                 alert(books.length + " books are collected.");
             }

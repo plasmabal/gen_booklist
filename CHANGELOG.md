@@ -1,5 +1,8 @@
 # UPCOMING
 
+# v0.9
+* Amazon CN changes their bookshelf URL and layout.  Modify the code accordingly.
+
 # v0.8
 * BOOKWALKER TW changes their bookshelf URL and layout.  Modify the code accordingly.
 

@@ -245,7 +245,7 @@
         }
     }
 
-    // https://www.amazon.cn/hz/mycd/myx*
+    // https://www.amazon.cn/hz/mycd/digital-console/contentlist/
     let amazonCNSite = {
         isCorrectHost: function(host) {
             return (host == "www.amazon.cn");
@@ -266,7 +266,7 @@
         }
     }
 
-    // https://www.bookwalker.com.tw/member/available_book_list
+    // https://www.bookwalker.com.tw/bookcase/available_book_list
     let bookwalkerTWSite = {
         isCorrectHost: function(host) {
             return (host == "www.bookwalker.com.tw");

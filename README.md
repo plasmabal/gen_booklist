@@ -30,8 +30,8 @@ This script is inspired by https://docs.google.com/presentation/d/1WMrwjj6R927XE
 * MyBook (https://mybook.taiwanmobile.com/bookcase/list).
 * Amazon US (https://www.amazon.com/hz/mycd/digital-console/contentlist/).
 * HamiBook (https://webreader.hamibook.com.tw/HamiBookcase#/).
-* Amazon CN (https://www.amazon.cn/hz/mycd/myx, https://www.amazon.cn/gp/digital/fiona/manage).
-* BOOKWALKER TW (https://www.bookwalker.com.tw/member/available_book_list)
+* Amazon CN (https://www.amazon.cn/hz/mycd/digital-console/contentlist/).
+* BOOKWALKER TW (https://www.bookwalker.com.tw/bookcase/available_book_list)
 
 # Other things
 
